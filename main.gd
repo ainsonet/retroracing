@@ -152,6 +152,11 @@ var post_request: HTTPRequest
 var get_request: HTTPRequest
 
 func _ready():
+	var wasd = {"ui_up": KEY_W, "ui_down": KEY_S, "ui_left": KEY_A, "ui_right": KEY_D}
+	for action in wasd:
+		var ev = InputEventKey.new()
+		ev.physical_keycode = wasd[action]
+		InputMap.action_add_event(action, ev)
 	
 	
 	
