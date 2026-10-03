@@ -1,0 +1,21 @@
+﻿# Godot 4+ specific ignores
+.godot/
+*.translation
+*.tmp
+
+# Exported builds
+builds/
+export/
+*.exe
+*.pck
+*.app
+*.dmg
+*.zip
+*.tar.gz
+*.apk
+*.aab
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
