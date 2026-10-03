@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccno05a0qv8bb"
-path="res://.godot/imported/camper.png-ed9d4a7bdc30f45c72deb0f5a4c3dd77.ctex"
+uid="uid://cy7ws0a6ga7bl"
+path="res://.godot/imported/icon.png-487276ed1e3a0c39cad0279d744ee560.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://vehicles/camper.png"
-dest_files=["res://.godot/imported/camper.png-ed9d4a7bdc30f45c72deb0f5a4c3dd77.ctex"]
+source_file="res://icon.png"
+dest_files=["res://.godot/imported/icon.png-487276ed1e3a0c39cad0279d744ee560.ctex"]
 
 [params]
 

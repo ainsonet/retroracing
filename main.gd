@@ -68,12 +68,10 @@ var score_multiplier = 1.0
 var shields = 0
 var traffic_calmness = 1.0
 
-func load_mp3(path: String, loop: bool = false) -> AudioStreamMP3:
-	var file = FileAccess.open(path, FileAccess.READ)
-	if not file: return null
-	var stream = AudioStreamMP3.new()
-	stream.data = file.get_buffer(file.get_length())
-	stream.loop = loop
+func load_mp3(path: String, loop: bool = false):
+	var stream = ResourceLoader.load(path)
+	if stream and stream is AudioStreamMP3:
+		stream.loop = loop
 	return stream
 
 var score_ui_x = 55.0
@@ -190,26 +188,21 @@ func _ready():
 	# Динамически загружаем все 30 вариантов машин из папки
 
 	
-	var dir = DirAccess.open("res://vehicles")
-	if dir:
-		for file in dir.get_files():
-			if file.ends_with(".png"):
-				traffic_textures.append(load_image_texture("res://vehicles/" + file))
+	var vehicle_files = ["bus.png","bus_c1.png","bus_c2.png","camper.png","camper_c1.png","camper_c2.png","heavytruck.png","heavytruck_c1.png","heavytruck_c2.png","musclecar.png","musclecar_c1.png","musclecar_c2.png","policecar.png","schoolbus.png","schoolbus_c1.png","schoolbus_c2.png","sportcar.png","taxicar.png","taxicar_c1.png","taxicar_c2.png","truck.png","truck_c1.png","truck_c2.png"]
+	for file in vehicle_files:
+		var tex = load_image_texture("res://vehicles/" + file)
+		if tex: traffic_textures.append(tex)
 				
 	city_tex = load_image_texture("res://city.png")
 	grass_tuft_tex = load_image_texture("res://nature/grass_tuft.png")
-	if FileAccess.file_exists("res://dashboard.png"):
-		dashboard_tex = load_image_texture("res://dashboard.png")
-	if FileAccess.file_exists("res://score_panel.png"):
-		score_panel_tex = load_image_texture("res://score_panel.png")
-	if FileAccess.file_exists("res://explosion.png"):
-		explosion_tex = load_image_texture("res://explosion.png")
+	dashboard_tex = load_image_texture("res://dashboard.png")
+	score_panel_tex = load_image_texture("res://score_panel.png")
+	explosion_tex = load_image_texture("res://explosion.png")
 	
 	vegetation_sprites.clear()
-	var nature_dir = DirAccess.open("res://nature")
-	if nature_dir:
-		for file in nature_dir.get_files():
-			if file.ends_with(".png") and not "grass_tuft" in file:
+	var nature_files = ["boulder.png","bush1.png","bush2.png","cactus.png","pinetree.png","spookytree.png","tree.png","tree1.png","tree2.png"]
+	for file in nature_files:
+		if true:
 				var tex = load_image_texture("res://nature/" + file)
 				var phys_w = 600000.0
 				if "boulder" in file or "rock" in file: phys_w = 500000.0
@@ -219,8 +212,7 @@ func _ready():
 				vegetation_sprites.append({"tex": tex, "phys_w": phys_w})
 	
 	var start_player = AudioStreamPlayer.new()
-	if FileAccess.file_exists("res://logo_transparent.png"):
-		logo_tex = load_image_texture("res://logo_transparent.png")
+	logo_tex = load_image_texture("res://logo_transparent.png")
 	start_player.stream = load_mp3("res://engine-start.mp3", false)
 	add_child(start_player)
 	start_player.play()
@@ -265,10 +257,9 @@ func _ready():
 	if music_on:
 		music_player_1.play()
 
-	var buildings_dir = DirAccess.open("res://buildings")
-	if buildings_dir:
-		for file in buildings_dir.get_files():
-			if file.ends_with(".png"):
+	var building_files = ["apartment_house.png","arcade_cafe.png","barn_house.png","billboard_gas.png","cabin_house.png","cafe.png","gasstation.png","house.png","motel_cafe.png","police_house.png","trailer_house.png","villa_house.png"]
+	for file in building_files:
+		if true:
 				var tex = load_image_texture("res://buildings/" + file)
 				var phys_w = 2000000.0
 				var b_type = "house"
@@ -363,26 +354,26 @@ func _ready():
 
 
 func _process(delta):
-	if retro_font == null and FileAccess.file_exists("res://PressStart2P.ttf"):
+	if retro_font == null:
 		retro_font = load("res://PressStart2P.ttf")
 	pass # Initialized in _ready
 		
 
 	
-	if hazard_player == null and FileAccess.file_exists("res://the-sound-of-turn-signals-that-happens-when-you-sit-inside-the-car-chevrolet-cavalier.mp3"):
+	if hazard_player == null:
 		hazard_player = AudioStreamPlayer.new()
 		hazard_player.stream = load_mp3("res://the-sound-of-turn-signals-that-happens-when-you-sit-inside-the-car-chevrolet-cavalier.mp3", true)
 		hazard_player.volume_db = 24.0
 		add_child(hazard_player)
 	
-	if pass_player == null and FileAccess.file_exists("res://porsche-car-overtaking-other-cars-on-the-track.mp3"):
+	if pass_player == null:
 		pass_player = AudioStreamPlayer.new()
 		pass_player.stream = load_mp3("res://porsche-car-overtaking-other-cars-on-the-track.mp3", false)
 		add_child(pass_player)
 	
-	if explosion_tex == null and FileAccess.file_exists("res://explosion.png"):
+	if explosion_tex == null:
 		explosion_tex = load_image_texture("res://explosion.png")
-	if logo_tex == null and FileAccess.file_exists("res://logo_transparent.png"):
+	if logo_tex == null:
 		logo_tex = load_image_texture("res://logo_transparent.png")
 	
 	if game_state == "MENU":
